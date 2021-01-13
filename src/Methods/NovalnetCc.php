@@ -77,7 +77,7 @@ class NovalnetCc extends PaymentMethodBaseService
     public function isActive():bool
     {
         if ($this->config->get('Novalnet.novalnet_cc_payment_active') == 'true') {
-            return (bool)($this->paymentService->isPaymentActive('novalnet_cc'));
+            return (bool)($this->paymentService->isPaymentActive($this->basket, 'novalnet_cc'));
         }
         return false;
     }
