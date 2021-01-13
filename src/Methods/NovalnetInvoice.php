@@ -77,7 +77,7 @@ class NovalnetInvoice extends PaymentMethodBaseService
     public function isActive():bool
     {
        if ($this->config->get('Novalnet.novalnet_invoice_payment_active') == 'true') {
-        return (bool)($this->paymentService->isPaymentActive('novalnet_invoice'));
+        return (bool)($this->paymentService->isPaymentActive($this->basket, 'novalnet_invoice'));
        }
         return false;
     }
@@ -108,7 +108,7 @@ class NovalnetInvoice extends PaymentMethodBaseService
      *
      * @return string
      */
-    public function getIcon(string $lang):string
+    public function getIcon(string $lang = 'de'):string
     {
         $logoUrl = $this->config->get('Novalnet.novalnet_invoice_payment_logo');
         if($logoUrl == 'images/novalnet_invoice.png')
@@ -125,7 +125,7 @@ class NovalnetInvoice extends PaymentMethodBaseService
      *
      * @return string
      */
-    public function getDescription(string $lang):string
+    public function getDescription(string $lang = 'de'):string
     {
         $description = trim($this->config->get('Novalnet.novalnet_invoice_description'));
         return ($description ? $description : $this->paymentHelper->getTranslatedText('invoicePrepaymentPaymentDescription'));
@@ -177,7 +177,7 @@ class NovalnetInvoice extends PaymentMethodBaseService
      * @param  string  $lang
      * @return string
      */
-    public function getBackendName(string $lang):string
+    public function getBackendName(string $lang = 'de'):string
     {
         return 'Novalnet Invoice';
     }
