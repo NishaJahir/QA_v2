@@ -58,7 +58,7 @@ class NovalnetInvoice extends PaymentMethodBaseService
      * @param BasketRepositoryContract $basket
      */
     public function __construct(ConfigRepository $config,
-                                PaymentHelper $paymentHelper
+                                PaymentHelper $paymentHelper,
                                 PaymentService $paymentService,
                                 BasketRepositoryContract $basket
                                )
