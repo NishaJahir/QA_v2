@@ -136,28 +136,28 @@ class PaymentService
     * @param string $paymentKey
     * return bool
     */
-    public function isPaymentActive($paymentKey) 
+    public function isPaymentActive($basket, $paymentKey) 
     {
         $paymentDisplay = false;
         
         // Allowed country check
         $paymentAllowedCountry = 'true';
         if ($allowedCountry = $this->config->get('Novalnet.' . $paymentKey . '_allowed_country')) {
-            $paymentAllowedCountry  = $this->allowedCountries($this->basket, $allowedCountry);
+            $paymentAllowedCountry  = $this->allowedCountries($basket, $allowedCountry);
         }
 
         // Minimum order amount check
         $minimumOrderAmount = 'true';
         $minOrderAmount = trim($this->config->get('Novalnet.' . $paymentKey . '_minimum_order_amount'));
         if (!empty($minOrderAmount) && is_numeric($minOrderAmount)) {
-            $minimumOrderAmount = $this->getMinBasketAmount($this->basket, $minOrderAmount);
+            $minimumOrderAmount = $this->getMinBasketAmount($basket, $minOrderAmount);
         }
 
         // Maximum order amount check
         $maximumOrderAmount = 'true';
         $maxOrderAmount = trim($this->config->get('Novalnet.' . $paymentKey . '_maximum_order_amount'));
         if (!empty($maxOrderAmount) && is_numeric($maxOrderAmount)) {
-            $maximumOrderAmount = $this->getMaxBasketAmount($this->basket, $maxOrderAmount);
+            $maximumOrderAmount = $this->getMaxBasketAmount($basket, $maxOrderAmount);
         }
 
         if (!empty(trim($this->config->get('Novalnet.novalnet_public_key'))) && is_numeric(trim($this->config->get('Novalnet.novalnet_tariff_id'))) && !empty(trim($this->config->get('Novalnet.novalnet_access_key'))) && $paymentAllowedCountry && $minimumOrderAmount && $maximumOrderAmount)
