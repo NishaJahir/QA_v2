@@ -83,7 +83,7 @@ class NovalnetInstalmentInvoice extends PaymentMethodBaseService
             }
             $paymentConditionValidation = $this->paymentService->checkPaymentDisplayConditions($this->basket, 'novalnet_instalment_invoice');
 
-            return (bool)($this->paymentService->isPaymentActive('novalnet_instalment_invoice') && $instalmentPaymentMimimumAmount && $paymentConditionValidation);
+            return (bool)($this->paymentService->isPaymentActive($this->basket, 'novalnet_instalment_invoice') && $instalmentPaymentMimimumAmount && $paymentConditionValidation);
         }
         return false;
     }
@@ -114,7 +114,7 @@ class NovalnetInstalmentInvoice extends PaymentMethodBaseService
      *
      * @return string
      */
-    public function getIcon(string $lang):string
+    public function getIcon(string $lang = 'de'):string
     {
         $logoUrl = $this->config->get('Novalnet.novalnet_instalment_invoice_payment_logo');
         if($logoUrl == 'images/novalnet_invoice.png')
@@ -131,7 +131,7 @@ class NovalnetInstalmentInvoice extends PaymentMethodBaseService
      *
      * @return string
      */
-    public function getDescription(string $lang):string
+    public function getDescription(string $lang = 'de'):string
     {
        $description = trim($this->config->get('Novalnet.novalnet_invoice_description'));
        return ($description ? $description : $this->paymentHelper->getTranslatedText('invoicePrepaymentPaymentDescription'));
@@ -183,7 +183,7 @@ class NovalnetInstalmentInvoice extends PaymentMethodBaseService
      * @param  string  $lang
      * @return string
      */
-    public function getBackendName(string $lang):string
+    public function getBackendName(string $lang = 'de'):string
     {
         return 'Novalnet Instalment by Invoice';
     }
