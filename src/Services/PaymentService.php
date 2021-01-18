@@ -683,7 +683,7 @@ class PaymentService
                     'future_instalment_date' => $nnPaymentData['instalment']['cycle_dates']
                 ];
             }
-
+           $this->getLogger(__METHOD__)->error('validate', $nnPaymentData);
             $transactionData = [
                 'amount'           => $nnPaymentData['transaction']['amount'],
                 'callback_amount'  => $nnPaymentData['transaction']['amount'],
