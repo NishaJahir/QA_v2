@@ -76,7 +76,8 @@ class NovalnetInstalmentInvoice extends PaymentMethodBaseService
     public function isActive():bool
     {
         if ($this->config->get('Novalnet.novalnet_instalment_invoice_payment_active') == 'true') {
-            return (bool)($this->paymentService->isPaymentActive($this->basket, 'novalnet_instalment_invoice'));
+            $paymentConditionValidation = $this->paymentService->checkPaymentDisplayConditions($this->basket, 'novalnet_instalment_invoice');
+            return (bool)($this->paymentService->isPaymentActive($this->basket, 'novalnet_instalment_invoice') && $paymentConditionValidation);
         }
         return false;
     }
