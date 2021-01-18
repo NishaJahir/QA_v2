@@ -673,7 +673,7 @@ class PaymentService
             
             $additionalInfo = $this->additionalInfo($nnPaymentData);
         
-            if($nnPaymentData['payment_method'] == 'INSTALMENT_INVOICE') {
+            if($nnPaymentData['payment_method'] == 'novalnet_instalment_invoice') {
                 $instalmentInfo = [
                     'total_paid_amount' => $nnPaymentData['instalment']['cycle_amount'],
                     'instalment_cycle_amount' => $nnPaymentData['instalment']['cycle_amount'],
@@ -701,8 +701,7 @@ class PaymentService
             if($nnPaymentData['payment_method'] == 'novalnet_invoice' || (in_array($nnPaymentData['transaction']['status'], ['PENIDNG', 'ON_HOLD']))) {
                 $transactionData['callback_amount'] = 0;    
             }
-            $this->getLogger(__METHOD__)->error('response', $nnPaymentData);
-            $this->getLogger(__METHOD__)->error('responsedsdsd', $transactionData);
+
             $this->transactionLogData->saveTransaction($transactionData);
             
             if(in_array($nnPaymentData['result']['status'], ['PENDING', 'SUCCESS'])) {
