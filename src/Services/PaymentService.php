@@ -326,14 +326,14 @@ class PaymentService
                 'house_no'     => $billingAddress->houseNumber,
                 'city'         => $billingAddress->town,
                 'zip'          => $billingAddress->postalCode,
-                'country_code' => $this->countryRepository->findIsoCode($billingAddress->countryId, 'iso_code_2')
+                'country_code' => strtoupper($this->countryRepository->findIsoCode($billingAddress->countryId, 'iso_code_2'))
             ];
          $billingShippingDetails['shipping']    = [
                 'street'   => !empty($shippingAddress->street) ? $shippingAddress->street : $billingAddress->street,
                 'house_no'     => !empty($shippingAddress->houseNumber) ? $shippingAddress->street : $billingAddress->houseNumber,
                 'city'     => !empty($shippingAddress->town) ? $shippingAddress->street : $billingAddress->town,
                 'zip' => !empty($shippingAddress->postalCode) ? $shippingAddress->street : $billingAddress->postalCode,
-                'country_code' => !empty($shippingAddress->countryId) ? $this->countryRepository->findIsoCode($shippingAddress->countryId, 'iso_code_2') : $this->countryRepository->findIsoCode($billingAddress->countryId, 'iso_code_2')
+                'country_code' => !empty($shippingAddress->countryId) ? strtoupper($this->countryRepository->findIsoCode($shippingAddress->countryId, 'iso_code_2')) : strtoupper($this->countryRepository->findIsoCode($billingAddress->countryId, 'iso_code_2'))
             ];
         return $billingShippingDetails;
     }
