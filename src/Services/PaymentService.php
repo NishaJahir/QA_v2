@@ -270,15 +270,17 @@ class PaymentService
                     $shippingAddress = $this->addressRepository->findAddressById($basket->customerShippingAddressId);
                 }
                 // Get country validation value
-                $billingShippingDetails = $this->getBillingShippingDetails($billingAddress, $shippingAddress);
-                $countryValidation = $this->EuropeanUnionCountryValidation($paymentKey, $billingShippingDetails['billing']['country_code']);
+              // $billingShippingDetails = $this->getBillingShippingDetails($billingAddress, $shippingAddress);
+               // $countryValidation = $this->EuropeanUnionCountryValidation($paymentKey, $billingShippingDetails['billing']['country_code']);
+                $countryValidation = true;
+                return true;
                 // Check the payment condition
-                if((((int) $amount >= (int) $minimumAmount && $instalementCyclesCheck && $countryValidation && $basket->currency == 'EUR' && ($billingShippingDetails['billing'] === $billingShippingDetails['shipping']) )
-                )) {
-                    return true;
-                } else {
-                    return false;
-                }
+              //  if((((int) $amount >= (int) $minimumAmount && $instalementCyclesCheck && $countryValidation && $basket->currency == 'EUR' && ($billingShippingDetails['billing'] === $billingShippingDetails['shipping']) )
+              //  )) {
+             //      return true;
+              //  } else {
+              //      return false;
+              //  }
             }
         }
         return false;
