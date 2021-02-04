@@ -22,13 +22,14 @@ use Novalnet\Helper\PaymentHelper;
 use Novalnet\Services\PaymentService;
 use Plenty\Modules\Basket\Models\Basket;
 use Plenty\Modules\Basket\Contracts\BasketRepositoryContract;
-
+use Plenty\Plugin\Log\Loggable;
 /**
  * Class NovalnetInstalmentInvoice
  * @package Novalnet\Methods
  */
 class NovalnetInstalmentInvoice extends PaymentMethodBaseService
 {
+    use Loggable;
     /**
      * @var ConfigRepository
      */
@@ -76,8 +77,15 @@ class NovalnetInstalmentInvoice extends PaymentMethodBaseService
     public function isActive():bool
     {
         if ($this->config->get('Novalnet.novalnet_instalment_invoice_payment_active') == 'true') {
-           
-            return (bool)($this->paymentService->isPaymentActive($this->basket, 'novalnet_instalment_invoice'));
+            
+            $instalmentPaymentMimimumAmount = true;
+            $minimumAmount = trim($this->config->get('Novalnet.novalnet_instalment_invoice_min_amount'));
+            if (!empty($minimumAmount) && is_numeric($minimumAmount) && $minimumAmount < 1998) {
+                $this->getLogger(__METHOD__)->error('instalment min amount enter', $minimumAmount);
+                $instalmentPaymentMimimumAmount = false;
+            }
+            $this->getLogger(__METHOD__)->error('instalment min amount', $instalmentPaymentMimimumAmount);
+            return (bool)($this->paymentService->isPaymentActive($this->basket, 'novalnet_instalment_invoice') && $instalmentPaymentMimimumAmount);
         }
         return false;
     }
