@@ -85,8 +85,7 @@ class NovalnetInstalmentInvoice extends PaymentMethodBaseService
                 $instalmentPaymentMimimumAmount = false;
             }
             $this->getLogger(__METHOD__)->error('instalment min amount', $instalmentPaymentMimimumAmount);
-           // $paymentConditionValidation = $this->paymentService->checkPaymentDisplayConditions($this->basket, 'novalnet_instalment_invoice');
-           // $this->getLogger(__METHOD__)->error('instalment condition', $paymentConditionValidation);
+           
             return (bool)($this->paymentService->isPaymentActive($this->basket, 'novalnet_instalment_invoice') && $instalmentPaymentMimimumAmount);
         }
         return false;
