@@ -244,7 +244,7 @@ class PaymentService
     */
     public function checkPaymentDisplayConditions(Basket $basket, $paymentKey) 
     {
-        if (!is_null($basket) && $basket instanceof Basket) {
+      
             $paymentActive = $this->config->get('Novalnet.'.$paymentKey.'_payment_active');
             if ($paymentActive == 'true') {
                 // Minimum amount validation
@@ -282,8 +282,7 @@ class PaymentService
               //      return false;
               //  }
             }
-        }
-        return false;
+       
     }
     
     /**
