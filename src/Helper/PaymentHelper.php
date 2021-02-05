@@ -15,7 +15,7 @@
 
 namespace Novalnet\Helper;
 
-use GuzzleHttp\Psr7\Request;
+use \GuzzleHttp\Psr7\Request;
 use Plenty\Modules\Payment\Method\Contracts\PaymentMethodRepositoryContract;
 use Plenty\Modules\Payment\Models\Payment;
 use Plenty\Modules\Payment\Models\PaymentProperty;
