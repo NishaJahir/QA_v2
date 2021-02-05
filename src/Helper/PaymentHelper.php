@@ -29,7 +29,8 @@ use \Plenty\Modules\Authorization\Services\AuthHelper;
 use Plenty\Modules\Comment\Contracts\CommentRepositoryContract;
 use Plenty\Modules\Order\Shipping\Countries\Contracts\CountryRepositoryContract;
 use Plenty\Modules\Frontend\Session\Storage\Contracts\FrontendSessionStorageFactoryContract;
-use \GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+
 /**
  * Class PaymentHelper
  * @package Novalnet\Helper
@@ -108,7 +109,7 @@ class PaymentHelper
                                 ConfigRepository $configRepository,
                                 FrontendSessionStorageFactoryContract $sessionStorage,
                                 CountryRepositoryContract $countryRepository,
-                                 Client $client
+                                 Request $client
                               )
     {
         $this->paymentMethodRepository        = $paymentMethodRepository;
@@ -266,7 +267,7 @@ class PaymentHelper
             );
 
         try {
-            $response = $this->client->request('POST', $url, $headers, ['body' => $data]);
+            $response = $this->client->send('POST', $url, $headers,  $data);
         } catch (\Exception $e) {
             $this->getLogger(__METHOD__)->error('Novalnet::executeCurlError', $e);
         }
