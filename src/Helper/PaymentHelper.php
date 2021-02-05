@@ -15,7 +15,7 @@
 
 namespace Novalnet\Helper;
 
-use \GuzzleHttp\Psr7\Request;
+use GuzzleHttp;
 use Plenty\Modules\Payment\Method\Contracts\PaymentMethodRepositoryContract;
 use Plenty\Modules\Payment\Models\Payment;
 use Plenty\Modules\Payment\Models\PaymentProperty;
@@ -30,7 +30,6 @@ use \Plenty\Modules\Authorization\Services\AuthHelper;
 use Plenty\Modules\Comment\Contracts\CommentRepositoryContract;
 use Plenty\Modules\Order\Shipping\Countries\Contracts\CountryRepositoryContract;
 use Plenty\Modules\Frontend\Session\Storage\Contracts\FrontendSessionStorageFactoryContract;
-use \GuzzleHttp\Client;
 
 /**
  * Class PaymentHelper
@@ -88,7 +87,6 @@ class PaymentHelper
     */
     private $sessionStorage;
     
-    private $client;
 
     /**
      * PaymentHelper Constructor.
@@ -109,8 +107,7 @@ class PaymentHelper
                                 CommentRepositoryContract $orderComment,
                                 ConfigRepository $configRepository,
                                 FrontendSessionStorageFactoryContract $sessionStorage,
-                                CountryRepositoryContract $countryRepository,
-                                 Client $client
+                                CountryRepositoryContract $countryRepository
                               )
     {
         $this->paymentMethodRepository        = $paymentMethodRepository;
@@ -121,7 +118,7 @@ class PaymentHelper
         $this->config                         = $configRepository;
         $this->sessionStorage                 = $sessionStorage;
         $this->countryRepository              = $countryRepository;
-        $this->client = $client;
+      
     }
 
     /**
