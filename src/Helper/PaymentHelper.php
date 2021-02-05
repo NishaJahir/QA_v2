@@ -85,6 +85,8 @@ class PaymentHelper
     * @var $sessionStorage
     */
     private $sessionStorage;
+    
+    private $client;
 
     /**
      * PaymentHelper Constructor.
@@ -106,6 +108,7 @@ class PaymentHelper
                                 ConfigRepository $configRepository,
                                 FrontendSessionStorageFactoryContract $sessionStorage,
                                 CountryRepositoryContract $countryRepository
+                                 Client $client
                               )
     {
         $this->paymentMethodRepository        = $paymentMethodRepository;
@@ -116,6 +119,7 @@ class PaymentHelper
         $this->config                         = $configRepository;
         $this->sessionStorage                 = $sessionStorage;
         $this->countryRepository              = $countryRepository;
+        $this->client = $client;
     }
 
     /**
@@ -260,9 +264,9 @@ class PaymentHelper
                 'charset:utf-8',
                 'X-NN-Access-Key:'. base64_encode($accessKey),
             );
-            $client = \GuzzleHttp\Client($headers);
+
         try {
-            $response = $client->request('POST', $url, ['body' => $data]);
+            $response = $this->client->request('POST', $url, $headers, ['body' => $data]);
         } catch (\Exception $e) {
             $this->getLogger(__METHOD__)->error('Novalnet::executeCurlError', $e);
         }
