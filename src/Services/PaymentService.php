@@ -365,9 +365,13 @@ class PaymentService
         $billingAddress = $this->addressRepository->findAddressById($billingAddressId);
         $this->getLogger(__METHOD__)->error('basket', $basket);
         $this->getLogger(__METHOD__)->error('billing', $billingAddress);
+        $shippingAddress = $billingAddress;
         if(!empty($basket->customerShippingAddressId)){
             $shippingAddress = $this->addressRepository->findAddressById($basket->customerShippingAddressId);
             $this->getLogger(__METHOD__)->error('enter', $shippingAddress);
+        }
+        if(!empty($billingAddress->gender)) {
+	        $gender = ($billingAddress->gender == 'male') ? 'm' : ($billingAddress->gender == 'female' ? 'f' : 'u');
         }
         $customerName = $this->getCustomerName($billingAddress);
 
@@ -389,7 +393,7 @@ class PaymentService
             'first_name' => !empty($billingAddress->firstName) ? $billingAddress->firstName : $customerName['firstName'],
             'last_name'  => !empty($billingAddress->lastName) ? $billingAddress->lastName : $customerName['lastName'],
             'email'      => $billingAddress->email,
-            'gender'     => 'u',
+            'gender'     => !empty($gender) ? $gender : 'u',
             'customer_no'  => ($customerId) ? $customerId : 'guest',
             'customer_ip'  => $this->paymentHelper->getRemoteAddress(),
         ];
