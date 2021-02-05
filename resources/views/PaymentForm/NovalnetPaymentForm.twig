@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 {% endfor %}
-                 <input type="radio" name="radioOption" id="toggleForm"> {{trans("Novalnet::PaymentMethod.addNewAccountDetails")}}
+                 <input type="radio" name="radioOption" id="toggleForm"><span>{{trans("Novalnet::PaymentMethod.addNewAccountDetails")}}</span><br><br>
                  <input type="hidden" name="newForm" id="newForm">
                 {% endif %}
 
@@ -45,7 +45,7 @@
                         {% endif %}
                     </div>
 
-                    <div class="col-xs-12 col-sm-12">
+                    <div class="col-xs-12 col-sm-12 nnSavePayment">
                         <div data-model="nn_sepa_iban" class="input-unit">
                             <input type="text" name="nnSepaIban" autocomplete="off" id="nnSepaIban">
                             <label for="sepaIban">{{trans("Novalnet::PaymentMethod.sepaIbanLabel")}}*</label>
