@@ -29,7 +29,7 @@ use \Plenty\Modules\Authorization\Services\AuthHelper;
 use Plenty\Modules\Comment\Contracts\CommentRepositoryContract;
 use Plenty\Modules\Order\Shipping\Countries\Contracts\CountryRepositoryContract;
 use Plenty\Modules\Frontend\Session\Storage\Contracts\FrontendSessionStorageFactoryContract;
-
+use \GuzzleHttp\Client;
 /**
  * Class PaymentHelper
  * @package Novalnet\Helper
@@ -260,11 +260,11 @@ class PaymentHelper
                 'charset:utf-8',
                 'X-NN-Access-Key:'. base64_encode($accessKey),
             );
-            $client = new \GuzzleHttp\Client($headers);
+            $client = new Client($headers);
         try {
-            $response = $client->post($url, ['body' => $data]);
-        } catch (\GuzzleHttp\Exception\ClientException $e) {
-            $response = $e->getResponse();
+            $response = $client->request('POST', $url, ['body' => $data]);
+        } catch (\Exception $e) {
+            $this->getLogger(__METHOD__)->error('Novalnet::executeCurlError', $e);
         }
         $res = json_decode($response->getBody(), true);
         $this->getLogger(__METHOD__)->error('curl', $res);
