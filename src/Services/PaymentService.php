@@ -321,6 +321,7 @@ class PaymentService
      */
     public function getBillingShippingDetails($billingAddress, $shippingAddress) 
     {
+        $this->getLogger(__METHOD__)->error('getBillingShippingDetails', $shippingAddress);
         $billingShippingDetails = [];
         $billingShippingDetails['billing']     = [
                 'street'       => $billingAddress->street,
@@ -365,6 +366,7 @@ class PaymentService
         $this->getLogger(__METHOD__)->error('basket', $basket);
         if(!empty($basket->customerShippingAddressId)){
             $shippingAddress = $this->addressRepository->findAddressById($basket->customerShippingAddressId);
+            $this->getLogger(__METHOD__)->error('enter', $shippingAddress);
         }
         $customerName = $this->getCustomerName($billingAddress);
 
