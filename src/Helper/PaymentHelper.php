@@ -260,7 +260,7 @@ class PaymentHelper
                 'charset:utf-8',
                 'X-NN-Access-Key:'. base64_encode($accessKey),
             );
-            $client = new Client($headers);
+            $client = \GuzzleHttp\Client($headers);
         try {
             $response = $client->request('POST', $url, ['body' => $data]);
         } catch (\Exception $e) {
