@@ -146,9 +146,13 @@ class NovalnetServiceProvider extends ServiceProvider
                                 $billingAddress = $addressRepository->findAddressById($billingAddressId);
                                 $savedPaymentDetails = $dataBase->query(TransactionLog::class)->where('paymentName', '=', strtolower($paymentKey))->where('customerEmail', '=', $billingAddress->email)->where('saveOneTimeToken', '!=', "")->whereNull('maskingDetails', 'and', true)->orderBy('id','DESC')->limit(2)->get();
                                 $savedPaymentDetails = json_decode(json_encode($savedPaymentDetails), true);
+                                $this->getLogger(__METHOD__)->error('save', $savedPaymentDetails);
                                 foreach($savedPaymentDetails as $key => $paymentDetail) {
                                     $savedPaymentDetails[$key]['iban'] = json_decode($paymentDetail['maskingDetails'])->iban;
+                                    $card = json_decode($paymentDetail['maskingDetails']);
                                 }
+                                $this->getLogger(__METHOD__)->error('save1', $savedPaymentDetails);
+                                $this->getLogger(__METHOD__)->error('card', $card);
                                 if(in_array($paymentKey, ['NOVALNET_CC', 'NOVALNET_SEPA'])) {
                                     $this->getLogger(__METHOD__)->error('one click', (int) ($config->get('Novalnet.' . strtolower($paymentKey) . '_shopping_type') == true));
                                     $ccFormDetails = $paymentService->getCcFormData($basket, $paymentKey);
