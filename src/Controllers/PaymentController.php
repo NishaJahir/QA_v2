@@ -177,6 +177,7 @@ class PaymentController extends Controller
         }
         $paymentKey = explode('_', strtolower($requestData['paymentKey']));    
         if (!empty($paymentKey[0].$paymentKey[1].'SelectedToken') && empty('newForm')) {
+            $this->getLogger(__METHOD__)->error('tken', $paymentKey[0].$paymentKey[1].'SelectedToken');
             $paymentRequestParameters['transaction']['payment_data']['token'] = $paymentKey[0].$paymentKey[1].'SelectedToken';
         } else {
             // Common for one-click-shopping supported payments
