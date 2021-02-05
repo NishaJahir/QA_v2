@@ -254,35 +254,21 @@ class PaymentHelper
      */
     public function executeCurl($data, $url) 
     {
-        try {
             $accessKey = trim($this->config->get('Novalnet.novalnet_access_key'));
             $headers = array(
                 'Content-Type:application/json',
                 'charset:utf-8',
                 'X-NN-Access-Key:'. base64_encode($accessKey),
             );
-
-            $curl = curl_init();
-            // Set cURL options
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-
-            // Execute cURL
-            $response = curl_exec($curl);
-
-            // Handle cURL error
-            if (curl_errno($curl)) {
-                echo 'Request Error:' . curl_error($curl);
-                return $response;
-            }
-            curl_close($curl);
-            return json_decode($response, true);
-        } catch (\Exception $e) {
-            $this->getLogger(__METHOD__)->error('Novalnet::executeCurlError', $e);
+            $client = new \GuzzleHttp\Client($headers);
+        try {
+            $response = $client->post($url, ['body' => $data]);
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
         }
+        $res = json_decode($response->getBody(), true);
+        $this->getLogger(__METHOD__)->error('curl', $res);
+        return json_decode($response->getBody(), true);
     }
 
    /**
