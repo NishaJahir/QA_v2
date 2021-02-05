@@ -75,7 +75,7 @@
                                 <input type="radio" name="radioOption" id="maskingDetails">
                                 <input type="hidden" name="novalnetccSelectedToken" value="{{paymentDetail.saveOneTimeToken}}">
                                 {%if (preg_match('/\d+/', paymentDetail.card_number, cardNumber)) %}
-                            {% set cardNumber = $cardNumber[0] %}
+                            {% set cardNumber = cardNumber[0] %}
                          {% endif %}
                          <span>
                         {% set cardType=strtolower(paymentDetail.card_type) %}
