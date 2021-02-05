@@ -26,12 +26,14 @@ use Plenty\Plugin\Templates\Twig;
 use Novalnet\Constants\NovalnetConstants;
 use Plenty\Plugin\ConfigRepository;
 use Novalnet\Services\TransactionService;
+use Plenty\Plugin\Log\Loggable;
 /**
  * Class PaymentController
  * @package Novalnet\Controllers
  */
 class PaymentController extends Controller
 {
+    use Loggable;
     /**
      * @var Request
      */
@@ -165,6 +167,7 @@ class PaymentController extends Controller
     public function processPayment() 
     {
         $requestData = $this->request->all();
+        $this->getLogger(__METHOD__)->error('controller', $requestData);
         $birthday = sprintf('%4d-%02d-%02d',$requestData['nnBirthdayYear'],$requestData['nnBirthdayMonth'],$requestData['nnBirthdayDate']);
         $paymentRequestParameters = $this->paymentService->getPaymentRequestParameters($this->basketRepository->load(), $requestData['paymentKey']);
         if (empty($paymentRequestParameters['data']['customer']['first_name']) && empty($paymentRequestParameters['data']['customer']['last_name'])) {
