@@ -149,7 +149,7 @@ class NovalnetServiceProvider extends ServiceProvider
                                 $this->getLogger(__METHOD__)->error('save', $savedPaymentDetails);
                                 foreach($savedPaymentDetails as $key => $paymentDetail) {
                                     $savedPaymentDetails[$key]['iban'] = json_decode($paymentDetail['maskingDetails'])->iban;
-                                    $card = json_decode($paymentDetail['maskingDetails']);
+                                    $savedPaymentDetails[$key]['decodedMaskingDetails'] = json_decode($paymentDetail['maskingDetails']);
                                 }
                                 $this->getLogger(__METHOD__)->error('save1', $savedPaymentDetails);
                                 $this->getLogger(__METHOD__)->error('card', $card);
