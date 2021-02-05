@@ -362,12 +362,14 @@ class PaymentService
         
         $billingAddressId = $basket->customerInvoiceAddressId;
         $billingAddress = $this->addressRepository->findAddressById($billingAddressId);
+        $this->getLogger(__METHOD__)->error('basket', $basket);
         if(!empty($basket->customerShippingAddressId)){
             $shippingAddress = $this->addressRepository->findAddressById($basket->customerShippingAddressId);
         }
         $customerName = $this->getCustomerName($billingAddress);
 
         $account = pluginApp(AccountService::class);
+         $this->getLogger(__METHOD__)->error('account', $account);
         $customerId = $account->getAccountContactId();
         $paymentKeyLower = strtolower((string) $paymentKey);
         $testModeKey = 'Novalnet.' . $paymentKeyLower . '_test_mode'; 
