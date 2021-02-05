@@ -618,6 +618,7 @@ class PaymentService
         try {
             $serverRequestData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
             $serverRequestData['data']['transaction']['order_no'] = $this->sessionStorage->getPlugin()->getValue('nnOrderNo');
+		$this->getLogger(__METHOD__)->error('req',$serverRequestData);
             $response = $this->paymentHelper->executeCurl(json_encode($serverRequestData['data']), $serverRequestData['url']);
              if($serverRequestData['data']['transaction']['payment_type'] == 'PAYPAL') {
                  if (!empty($response['result']['redirect_url']) && !empty($response['transaction']['txn_secret'])) {
