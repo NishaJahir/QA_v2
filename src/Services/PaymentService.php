@@ -364,6 +364,7 @@ class PaymentService
         $billingAddressId = $basket->customerInvoiceAddressId;
         $billingAddress = $this->addressRepository->findAddressById($billingAddressId);
         $this->getLogger(__METHOD__)->error('basket', $basket);
+        $this->getLogger(__METHOD__)->error('billing', $billingAddress);
         if(!empty($basket->customerShippingAddressId)){
             $shippingAddress = $this->addressRepository->findAddressById($basket->customerShippingAddressId);
             $this->getLogger(__METHOD__)->error('enter', $shippingAddress);
