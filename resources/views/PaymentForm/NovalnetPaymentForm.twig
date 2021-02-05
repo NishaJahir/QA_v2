@@ -87,7 +87,7 @@
                      <input type="radio" name="radioOption" id="toggleForm"><strong> {{trans("Novalnet::PaymentMethod.addNewCardDetails")}}</strong><br><br>
                      <input type="hidden" name="newForm" id="newForm">
                     {% endif %}
-                    
+                    {{paymentDetail}}
                     <div class="row" id="newCardDetails">
                         <div class="col-xs-12 col-sm-12 nnSavePayment">
                             {%if oneClickShopping is not empty %}
