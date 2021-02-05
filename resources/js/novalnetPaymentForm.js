@@ -12,18 +12,24 @@ $(document).ready( function () {
     } else {
         $("#newCardDetails").hide();
     }
-   
-    $("input[type='radio']").click(function(){
-        var tokenValue = $("input[id='maskingDetails']:checked").val();
-        if(tokenValue){
-            $('#'+ splittedPaymentName[0] + splittedPaymentName[1] + 'token').val(tokenValue);
-        } else {
-            jQuery('#'+ splittedPaymentName[0] + splittedPaymentName[1] + 'token').val('');
+    
+    if( $("input[name='nn_radio_option']").length > 0  ) { 
+            var token = $("input[name='nn_radio_option']:first").val(); 
+            if(token){
+               $('#'+ splittedPaymentName[0] + splittedPaymentName[1] + 'token').val(tokenValue);
+            } else {
+               $('#'+ splittedPaymentName[0] + splittedPaymentName[1] + 'token').val('');
+            }
         }
-    });
     
     $("input[name='radioOption']").on('click', function () {
-        console.log($(this).attr('id'));
+        var tokenValue = $(this).val();
+            if(tokenValue){
+                $('#'+ splittedPaymentName[0] + splittedPaymentName[1] + 'token').val(tokenValue);
+            } else {
+                $('#'+ splittedPaymentName[0] + splittedPaymentName[1] + 'token').val('');
+            }
+        
             if($(this).attr('id') == 'toggleForm') {
                 $("#newCardDetails").show();
                 $("#newForm").val('1');
