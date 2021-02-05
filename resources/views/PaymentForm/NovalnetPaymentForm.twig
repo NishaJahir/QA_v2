@@ -75,7 +75,7 @@
                                 <input type="hidden" name="novalnetccSelectedToken" value="{{paymentDetail.saveOneTimeToken}}">
                          <span>
                         {% set cardType=paymentDetail.card_type|lower %}
-     
+                       <input type="hidden" value="{{paymentDetail}}">
                          <img src="{{ plugin_path('Novalnet') }}/images/novalnet_{$cardType}.png" alt="{{paymentDetail.card_type}}" title="{{paymentDetail.card_type}}">
                          {{trans("Novalnet::PaymentMethod.cardNumberEndingDetailsLabel")}} {{paymentDetail.card_number}} ({{trans("Novalnet::PaymentMethod.cardExpiresText")}} {{paymentDetail.card_validity}})
                          </span>
