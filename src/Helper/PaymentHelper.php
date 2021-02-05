@@ -30,7 +30,7 @@ use \Plenty\Modules\Authorization\Services\AuthHelper;
 use Plenty\Modules\Comment\Contracts\CommentRepositoryContract;
 use Plenty\Modules\Order\Shipping\Countries\Contracts\CountryRepositoryContract;
 use Plenty\Modules\Frontend\Session\Storage\Contracts\FrontendSessionStorageFactoryContract;
-
+use \GuzzleHttp\Client;
 
 /**
  * Class PaymentHelper
@@ -110,7 +110,7 @@ class PaymentHelper
                                 ConfigRepository $configRepository,
                                 FrontendSessionStorageFactoryContract $sessionStorage,
                                 CountryRepositoryContract $countryRepository,
-                                 Request $client
+                                 Client $client
                               )
     {
         $this->paymentMethodRepository        = $paymentMethodRepository;
