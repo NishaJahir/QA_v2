@@ -176,9 +176,9 @@ class PaymentController extends Controller
             return $this->response->redirectTo('checkout');
         }
         $paymentKey = explode('_', strtolower($requestData['paymentKey']));    
-        if (!empty($paymentKey[0].$paymentKey[1].'SelectedToken') && empty($requestData['newForm'])) {
+        if (!empty($requestData[$paymentKey[0].$paymentKey[1].'SelectedToken']) && empty($requestData['newForm'])) {
             $this->getLogger(__METHOD__)->error('tken', $paymentKey[0].$paymentKey[1].'SelectedToken');
-            $paymentRequestParameters['transaction']['payment_data']['token'] = $paymentKey[0].$paymentKey[1].'SelectedToken';
+            $paymentRequestParameters['data']['transaction']['payment_data']['token'] = $requestData[$paymentKey[0].$paymentKey[1].'SelectedToken'];
         } else {
             // Common for one-click-shopping supported payments
             if ($this->config->get('Novalnet.'. strtolower($requestData['paymentKey']) .'_shopping_type') == true) {
