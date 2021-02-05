@@ -5,7 +5,9 @@ var splittedPaymentName = lowerPaymentName.split('_');
 
 $(document).ready( function () {
     //~ Save card details process
+     console.log($("#toggleForm").length);
     if ($("#toggleForm").length <= 0 || $("#toggleForm").is(':checked') ) {
+        console.log($("#toggleForm").length);
         $("#newCardDetails").show();
     } else {
         $("#newCardDetails").hide();
@@ -14,13 +16,14 @@ $(document).ready( function () {
     $("input[type='radio']").click(function(){
         var tokenValue = $("input[id='maskingDetails']:checked").val();
         if(tokenValue){
-            $('#'+ splittedPaymentName[0] + splittedPaymentName[1] + 'token').val(token);
+            $('#'+ splittedPaymentName[0] + splittedPaymentName[1] + 'token').val(tokenValue);
         } else {
             jQuery('#'+ splittedPaymentName[0] + splittedPaymentName[1] + 'token').val('');
         }
     });
     
     $("input[name='radioOption']").on('click', function () {
+        console.log($(this).attr('id'));
             if($(this).attr('id') == 'toggleForm') {
                 $("#newCardDetails").show();
                 $("#newForm").val('1');
