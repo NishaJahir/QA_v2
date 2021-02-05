@@ -107,7 +107,7 @@ class PaymentHelper
                                 CommentRepositoryContract $orderComment,
                                 ConfigRepository $configRepository,
                                 FrontendSessionStorageFactoryContract $sessionStorage,
-                                CountryRepositoryContract $countryRepository
+                                CountryRepositoryContract $countryRepository,
                                  Client $client
                               )
     {
