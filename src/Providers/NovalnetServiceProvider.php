@@ -150,6 +150,7 @@ class NovalnetServiceProvider extends ServiceProvider
                                     $savedPaymentDetails[$key]['iban'] = json_decode($paymentDetail['maskingDetails'])->iban;
                                 }
                                 if(in_array($paymentKey, ['NOVALNET_CC', 'NOVALNET_SEPA'])) {
+                                    $this->getLogger(__METHOD__)->error('one click', (int) ($config->get('Novalnet.' . strtolower($paymentKey) . '_shopping_type') == true));
                                     $ccFormDetails = $paymentService->getCcFormData($basket, $paymentKey);
                                     $ccCustomFields = $paymentService->getCcFormFields();
                                     $content = $twig->render('Novalnet::PaymentForm.NovalnetPaymentForm', [
