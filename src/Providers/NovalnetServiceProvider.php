@@ -140,7 +140,7 @@ class NovalnetServiceProvider extends ServiceProvider
                             $content = $paymentHelper->getTranslatedText('firstLastNameError');
                             $contentType = 'errorCode';
                         } else {
-                            if(in_array($paymentKey, ['NOVALNET_CC', 'NOVALNET_SEPA', 'NOVALNET_INSTALMENT_INVOICE'])) {
+                            if(in_array($paymentKey, ['NOVALNET_CC', 'NOVALNET_SEPA', 'NOVALNET_INSTALMENT_INVOICE']) || ($paymentKey == 'NOVALNET_PAYPAL' && $config->get('Novalnet.' . strtolower($paymentKey) . '_shopping_type') == true) ) {
                                 $contentType = 'htmlContent';
                                 $billingAddressId = $basket->customerInvoiceAddressId;
                                 $billingAddress = $addressRepository->findAddressById($billingAddressId);
@@ -153,7 +153,7 @@ class NovalnetServiceProvider extends ServiceProvider
                                 }
                                 $this->getLogger(__METHOD__)->error('save1', $savedPaymentDetails);
                                 $this->getLogger(__METHOD__)->error('card', $card);
-                                if(in_array($paymentKey, ['NOVALNET_CC', 'NOVALNET_SEPA'])) {
+                                if(in_array($paymentKey, ['NOVALNET_CC', 'NOVALNET_SEPA', 'NOVALNET_PAYPAL'])) {
                                     $this->getLogger(__METHOD__)->error('one click', (int) ($config->get('Novalnet.' . strtolower($paymentKey) . '_shopping_type') == true));
                                     $ccFormDetails = $paymentService->getCcFormData($basket, $paymentKey);
                                     $ccCustomFields = $paymentService->getCcFormFields();
