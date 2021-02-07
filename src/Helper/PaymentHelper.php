@@ -130,7 +130,7 @@ class PaymentHelper
     public function getPaymentMethodByKey($paymentKey) 
     {
         $paymentMethods = $this->paymentMethodRepository->allForPlugin('plenty_novalnet');
-        
+        $this->getLogger(__METHOD__)->error('fdfdf', $paymentMethods);
         if(!is_null($paymentMethods))
         {
             foreach($paymentMethods as $paymentMethod)
@@ -153,6 +153,7 @@ class PaymentHelper
     public function getPaymentKeyByMop($mop) 
     {
         $paymentMethods = $this->paymentMethodRepository->allForPlugin('plenty_novalnet');
+        $this->getLogger(__METHOD__)->error('fff', $paymentMethods);
 
         if(!is_null($paymentMethods))
         {
