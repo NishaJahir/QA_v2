@@ -110,7 +110,7 @@
                 {% for paymentDetail in savedPaymentDetails %}  
                     <div class="row" id="remove_{{paymentDetail.saveOneTimeToken}}">
                         <div class="col-xs-12 col-sm-12">
-                            <input type="radio" name="radioOption" value="{{paymentDetail.saveOneTimeToken}">
+                            <input type="radio" name="radioOption" value="{{paymentDetail.saveOneTimeToken}}">
                             
                             <span> {{trans("Novalnet::PaymentMethod.paypalAccountLabel")}} {{paymentDetail.decodedMaskingDetails.paypal_account}}</span> 
                             <button type="button" class="btn btn-danger btnDelete"  onclick="removePaymentDetails('{{paymentDetail.saveOneTimeToken}}')" value="{{paymentDetail.saveOneTimeToken}}"><span class="fa fa-trash-o"></span></button>
