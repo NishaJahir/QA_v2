@@ -266,21 +266,22 @@ class PaymentService
                 // Address validation
                 $billingAddressId = $basket->customerInvoiceAddressId;
                 $billingAddress = $this->addressRepository->findAddressById($billingAddressId);
+		    $shippingAddress = $billingAddress;
                 if(!empty($basket->customerShippingAddressId)){
                     $shippingAddress = $this->addressRepository->findAddressById($basket->customerShippingAddressId);
                 }
                 // Get country validation value
-              // $billingShippingDetails = $this->getBillingShippingDetails($billingAddress, $shippingAddress);
-               // $countryValidation = $this->EuropeanUnionCountryValidation($paymentKey, $billingShippingDetails['billing']['country_code']);
-                $countryValidation = true;
+               $billingShippingDetails = $this->getBillingShippingDetails($billingAddress, $shippingAddress);
+                $countryValidation = $this->EuropeanUnionCountryValidation($paymentKey, $billingShippingDetails['billing']['country_code']);
+                
                 return true;
                 // Check the payment condition
-              //  if((((int) $amount >= (int) $minimumAmount && $instalementCyclesCheck && $countryValidation && $basket->currency == 'EUR' && ($billingShippingDetails['billing'] === $billingShippingDetails['shipping']) )
-              //  )) {
-             //      return true;
-              //  } else {
-              //      return false;
-              //  }
+                if((((int) $amount >= (int) $minimumAmount && $instalementCyclesCheck && $countryValidation && $basket->currency == 'EUR' && ($billingShippingDetails['billing'] === $billingShippingDetails['shipping']) )
+                )) {
+             return true;
+               } else {
+                   return false;
+               }
             }
        
     }
