@@ -72,7 +72,7 @@
                     {% for paymentDetail in savedPaymentDetails %}  
                         <div class="row" id="remove_{{paymentDetail.saveOneTimeToken}}">
                             <div class="col-xs-12 col-sm-12">
-                                <input type="radio" name="radioOption" id="maskingDetails">
+                                <input type="radio" name="radioOption" value="{{paymentDetail.saveOneTimeToken}}">
                          <span>
                         {% set cardType=paymentDetail.decodedMaskingDetails.card_type|lower %}
                         
