@@ -80,7 +80,7 @@
                          <img src="{{ plugin_path('Novalnet') }}/images/novalnet_{{cardType}}.png" alt="{{paymentDetail.decodedMaskingDetails.card_type}}" title="{{paymentDetail.decodedMaskingDetails.card_type}}">
                          {{trans("Novalnet::PaymentMethod.cardNumberEndingDetailsLabel")}} {{paymentDetail.decodedMaskingDetails.card_number}} ({{trans("Novalnet::PaymentMethod.cardExpiresText")}} {{paymentDetail.decodedMaskingDetails.card_validity}})
                          </span>
-                                <button type="button" class="btn btn-danger btnDelete"  onclick="removeCardDetails('{{paymentDetail.saveOneTimeToken}}')" value="{{paymentDetail.saveOneTimeToken}}"><span class="fa fa-trash-o"></span></button>
+                                <button type="button" class="btn btn-danger btnDelete"  onclick="removePaymentDetails('{{paymentDetail.saveOneTimeToken}}')" value="{{paymentDetail.saveOneTimeToken}}"><span class="fa fa-trash-o"></span></button>
                             </div>
                         </div>
                     {% endfor %}
