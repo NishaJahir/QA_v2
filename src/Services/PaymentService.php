@@ -135,6 +135,8 @@ class PaymentService
         $this->paymentHelper            = $paymentHelper;
         $this->twig                     = $twig;
         $this->transactionLogData       = $transactionLogData;
+	    $this->libCall = $libCall;
+	    $this->request = $request;
     }
     
     /**
@@ -635,7 +637,7 @@ class PaymentService
 		$this->getLogger(__METHOD__)->error('req',$serverRequestData);
             //$response = $this->paymentHelper->executeCurl(json_encode($serverRequestData['data']), $serverRequestData['url']);
 		$response = 
-			$this->libcall->call( 
+			 $this->libCall->call( 
 				'Novalnet::guzzle',
 				['nn_request' => $serverRequestData, 'nn_header' => $headers, 'nn_request_process_url' => $serverRequestData['url']] 
 			);
