@@ -1,18 +1,20 @@
 <?php
+use \GuzzleHttp\Client;
+use \GuzzleHttp\Psr7\Request;
 
 try {
-$client = new \GuzzleHttp\Client();
-$response = $client->request(
-    'POST', 
+$client = new Client();
+$request = new Request(
+    "POST", 
     SdkRestApi::getParam('nn_request_process_url'), 
-    SdkRestApi::getParam('nn_header'),
-    [        
-        'json' => SdkRestApi::getParam('nn_request')
-    ]
+    SdkRestApi::getParam('nn_header')
 );
+$response = $client->send($request,[
+        'json' => SdkRestApi::getParam('nn_request')
+    ]);
 
 /** @return array */
-return json_decode($response->getBody(), true); 
+return json_decode($response->getBody()->getContents(), true); 
 } catch (\Exception $e) {
    $e->getMessage();
 }
