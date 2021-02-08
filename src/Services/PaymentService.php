@@ -592,7 +592,7 @@ class PaymentService
 				['nn_request' => $serverRequestData, 'nn_header' => $headers, 'nn_request_process_url' => $serverRequestData['url']] 
 			);
 		
-		$this->getLogger(__METHOD__)->error('packagistResult', $packagistResult);
+		$this->getLogger(__METHOD__)->error('packagistResultsdsdsdsd', $response);
              if($serverRequestData['data']['transaction']['payment_type'] == 'PAYPAL') {
                  if (!empty($response['result']['redirect_url']) && !empty($response['transaction']['txn_secret'])) {
                         header('Location: ' . $response['result']['redirect_url']);
