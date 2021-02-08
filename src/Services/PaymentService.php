@@ -33,6 +33,8 @@ use Plenty\Plugin\Templates\Twig;
 use Plenty\Modules\Payment\History\Contracts\PaymentHistoryRepositoryContract;
 use Plenty\Modules\Payment\History\Models\PaymentHistory as PaymentHistoryModel;
 use Plenty\Modules\Payment\Contracts\PaymentRepositoryContract;
+use Plenty\Modules\Plugin\Libs\Contracts\LibraryCallContract; 
+use Plenty\Plugin\Http\Request; 
 
 /**
  * Class PaymentService
@@ -92,6 +94,9 @@ class PaymentService
      */
     private $transactionLogData;
 
+	private $libCall;
+	
+	private $request;
     /**
      * PaymentService Constructor.
      *
@@ -116,6 +121,8 @@ class PaymentService
                                 PaymentHistoryRepositoryContract $paymentHistoryRepo,
                                 PaymentRepositoryContract $paymentRepository,
                                 Twig $twig,
+				LibraryCallContract $libCall, 
+		Request $request,
                                 TransactionService $transactionLogData)
     {
         $this->config                   = $config;
@@ -619,8 +626,21 @@ class PaymentService
         try {
             $serverRequestData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
             $serverRequestData['data']['transaction']['order_no'] = $this->sessionStorage->getPlugin()->getValue('nnOrderNo');
+		 $accessKey = trim($this->config->get('Novalnet.novalnet_access_key'));
+            $headers = array(
+                'Content-Type:application/json',
+                'charset:utf-8',
+                'X-NN-Access-Key:'. base64_encode($accessKey),
+            );
 		$this->getLogger(__METHOD__)->error('req',$serverRequestData);
-            $response = $this->paymentHelper->executeCurl(json_encode($serverRequestData['data']), $serverRequestData['url']);
+            //$response = $this->paymentHelper->executeCurl(json_encode($serverRequestData['data']), $serverRequestData['url']);
+		$response = 
+			$this->libcall->call( 
+				'Novalnet::guzzle',
+				['nn_request' => $serverRequestData, 'nn_header' => $headers, 'nn_request_process_url' => $serverRequestData['url']] 
+			);
+		
+		$this->getLogger(__METHOD__)->error('packagistResult', $packagistResult);
              if($serverRequestData['data']['transaction']['payment_type'] == 'PAYPAL') {
                  if (!empty($response['result']['redirect_url']) && !empty($response['transaction']['txn_secret'])) {
                         header('Location: ' . $response['result']['redirect_url']);
