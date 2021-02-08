@@ -580,13 +580,15 @@ class PaymentService
             $serverRequestData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
             $serverRequestData['data']['transaction']['order_no'] = $this->sessionStorage->getPlugin()->getValue('nnOrderNo');
 		 $accessKey = trim($this->config->get('Novalnet.novalnet_access_key'));
+		$key = 'a87ff679a2f3e71d9181a67b7542122c';
 		$this->getLogger(__METHOD__)->error('req',$accessKey);
+		$this->getLogger(__METHOD__)->error('dfdf',$key);
 		$this->getLogger(__METHOD__)->error('req',$serverRequestData);
             //$response = $this->paymentHelper->executeCurl(json_encode($serverRequestData['data']), $serverRequestData['url']);
 		$response = 
 			 $this->libCall->call( 
 				'Novalnet::guzzle_client',
-				['nn_access_key' => base64_encode($accessKey), 'nn_request' => $serverRequestData, 'nn_request_process_url' => $serverRequestData['url']] 
+				['nn_access_key' => base64_encode("a87ff679a2f3e71d9181a67b7542122c"), 'nn_request' => $serverRequestData, 'nn_request_process_url' => $serverRequestData['url']] 
 			);
 		
 		$this->getLogger(__METHOD__)->error('packagistResultsdsdsdsd', $response);
