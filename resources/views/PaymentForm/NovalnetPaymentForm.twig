@@ -4,7 +4,7 @@
 
 <form method="post" id="novalnetForm" name="novalnetForm" action="{{nnPaymentProcessUrl}}">
     <input type="hidden" id="paymentKey" name="paymentKey" value="{{paymentMopKey}}" />
-    
+    <input type="hidden" name="one_click_shopping" id="one_click_shopping" value="{{oneClickShopping}}">
     <div class="modal-header">
        <h4 class="modal-title">{{paymentName}}</h4>
         <button type="button" aria-label="Close" data-dismiss="modal" class="close" onClick="window.location.reload();">
