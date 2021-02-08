@@ -175,16 +175,24 @@ class PaymentController extends Controller
             $this->paymentService->pushNotification($notificationMessage, 'error', 100);
             return $this->response->redirectTo('checkout');
         }
+        if ($this->config->get('Novalnet.'. strtolower($requestData['paymentKey']) .'_shopping_type') == true) {
+            
         $paymentKey = explode('_', strtolower($requestData['paymentKey']));    
         if (!empty($requestData[$paymentKey[0].$paymentKey[1].'SelectedToken']) && empty($requestData['newForm'])) {
             $this->getLogger(__METHOD__)->error('tken', $paymentKey[0].$paymentKey[1].'SelectedToken');
             $paymentRequestParameters['data']['transaction']['payment_data']['token'] = $requestData[$paymentKey[0].$paymentKey[1].'SelectedToken'];
         } else {
             // Common for one-click-shopping supported payments
-            if ($this->config->get('Novalnet.'. strtolower($requestData['paymentKey']) .'_shopping_type') == true) {
+            
               $paymentRequestParameters['data']['transaction']['create_token'] = 1;  
+        }
+            if ($requestData['paymentKey'] == 'NOVALNET_PAYPAL') {
+                $this->sessionStorage->getPlugin()->setValue('nnPaymentData', $paymentRequestParameters);
+        $this->getLogger(__METHOD__)->error('call one', $requestData);
+        return $this->response->redirectTo('place-order'); 
             }
-       
+        }
+
         
             // Build request params for Credit card
             if($requestData['paymentKey'] == 'NOVALNET_CC') {
@@ -198,7 +206,7 @@ class PaymentController extends Controller
                 $paymentRequestParameters['data']['instalment']['cycles'] = $requestData['nnInstalmentCycle'];
                 $paymentRequestParameters['data']['customer']['birth_date']   =  $birthday;
             }
-        }
+        
         $this->sessionStorage->getPlugin()->setValue('nnPaymentData', $paymentRequestParameters);
         $this->getLogger(__METHOD__)->error('one', $requestData);
         return $this->response->redirectTo('place-order');
