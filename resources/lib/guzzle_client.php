@@ -1,20 +1,35 @@
 <?php
 use \GuzzleHttp\Client;
 use \GuzzleHttp\Psr7\Request;
+use Plenty\Plugin\Log\Loggable;
 
-try {
-$client = new Client();
-$request = new Request(
-    "POST", 
-    SdkRestApi::getParam('nn_request_process_url'), 
-    SdkRestApi::getParam('nn_header')
-);
-$response = $client->send($request,[
-        'json' => SdkRestApi::getParam('nn_request')
-    ]);
-
-/** @return array */
-return json_decode($response->getBody()->getContents(), true); 
-} catch (\Exception $e) {
-   $e->getMessage();
+class NovalnetGuzzle 
+{
+    use Loggable;
+   public function __construct() {
+	   $this->novalnetGuzzle();
+	   
+	  }
+	  
+	 public function novalnetGuzzle() 
+	 
+	 {
+		 $options['headers'] = [
+            'Content-Type' => 'application/json',
+            'Charset' => 'utf-8',
+            'Accept' => 'application/json',
+            'X-NN-Access-Key' => SdkRestApi::getParam('nn_access_key')
+        ];
+        $client = new \GuzzleHttp\Client($options);
+        try {
+            $response = $client->post(SdkRestApi::getParam('nn_request_process_url'), ['body' => json_encode(SdkRestApi::getParam('nn_request'))]);
+            $this->getLogger(__METHOD__)->error('test', $response);
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+        }
+        return json_decode((string)$response->getBody(), true);
+		}
+    
+    
+    
 }
