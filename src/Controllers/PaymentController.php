@@ -178,7 +178,8 @@ class PaymentController extends Controller
             return $this->response->redirectTo('checkout');
         }
         if ($this->config->get('Novalnet.'. strtolower($requestData['paymentKey']) .'_shopping_type') == true) {
-            
+           $mop = $this->sessionStorage->getPlugin()->getValue('mop');
+        $this->getLogger(__METHOD__)->error('mop paymentreponse', $mop); 
         $paymentKey = explode('_', strtolower($requestData['paymentKey']));    
         if (!empty($requestData[$paymentKey[0].$paymentKey[1].'SelectedToken']) && empty($requestData['newForm'])) {
             $this->getLogger(__METHOD__)->error('tken', $paymentKey[0].$paymentKey[1].'SelectedToken');
