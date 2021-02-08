@@ -162,7 +162,7 @@ class NovalnetServiceProvider extends ServiceProvider
                                         'paymentName'         => $paymentName,
                                         'ccFormDetails'       => !empty($ccFormDetails)? $ccFormDetails : '',
                                         'ccCustomFields'       => !empty($ccCustomFields)? $ccCustomFields : '',
-                                        'oneClickShopping'   => $config->get('Novalnet.' . strtolower($paymentKey) . '_shopping_type'),
+                                        'oneClickShopping'   => (int) ($config->get('Novalnet.' . strtolower($paymentKey) . '_shopping_type') == true),
                                         'savedPaymentDetails' => $savedPaymentDetails,
                                         'removedSavedPaymentDetail' => $paymentHelper->getTranslatedText('removedSavedPaymentDetail'),
                                         'savedPaymentDetailsRemovalUrl' => $paymentService->getSavedTokenRemovalUrl(),
