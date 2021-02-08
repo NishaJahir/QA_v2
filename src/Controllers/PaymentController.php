@@ -122,8 +122,6 @@ class PaymentController extends Controller
     public function paymentResponse() 
     {
         $requestData = $this->request->all();
-        $mop = $this->sessionStorage->getPlugin()->getValue('mop');
-        $this->getLogger(__METHOD__)->error('mop paymentreponse', $mop);
         $responseData = $this->checksumForRedirects($requestData);
         $isPaymentSuccess = isset($responseData['result']['status']) && in_array($responseData['result']['status'], ['PENDING', 'SUCCESS']);
         $notificationMessage = $this->paymentHelper->getTranslatedText('paymentSuccess');
@@ -178,8 +176,6 @@ class PaymentController extends Controller
             return $this->response->redirectTo('checkout');
         }
         if ($this->config->get('Novalnet.'. strtolower($requestData['paymentKey']) .'_shopping_type') == true) {
-           $mop = $this->sessionStorage->getPlugin()->getValue('mop');
-        $this->getLogger(__METHOD__)->error('mop paymentreponse', $mop); 
         $paymentKey = explode('_', strtolower($requestData['paymentKey']));    
         if (!empty($requestData[$paymentKey[0].$paymentKey[1].'SelectedToken']) && empty($requestData['newForm'])) {
             $this->getLogger(__METHOD__)->error('tken', $paymentKey[0].$paymentKey[1].'SelectedToken');
@@ -189,11 +185,7 @@ class PaymentController extends Controller
             
               $paymentRequestParameters['data']['transaction']['create_token'] = 1;  
         }
-            if ($requestData['paymentKey'] == 'NOVALNET_PAYPAL') {
-                $this->sessionStorage->getPlugin()->setValue('nnPaymentData', $paymentRequestParameters);
-        $this->getLogger(__METHOD__)->error('call one', $requestData);
-        return $this->response->redirectTo('place-order'); 
-            }
+           
         }
 
         
@@ -211,7 +203,6 @@ class PaymentController extends Controller
             }
         
         $this->sessionStorage->getPlugin()->setValue('nnPaymentData', $paymentRequestParameters);
-        $this->getLogger(__METHOD__)->error('one', $requestData);
         return $this->response->redirectTo('place-order');
     }
     
