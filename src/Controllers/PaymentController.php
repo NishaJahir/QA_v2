@@ -184,12 +184,8 @@ class PaymentController extends Controller
             if ($this->config->get('Novalnet.'. strtolower($requestData['paymentKey']) .'_shopping_type') == true) {
               $paymentRequestParameters['data']['transaction']['create_token'] = 1;  
             }
-        } 
-        if($requestData['paymentKey'] == 'NOVALNET_PAYPAL' && $this->config->get('Novalnet.'. strtolower($requestData['paymentKey']) .'_shopping_type') == true)
-            {
-               $this->sessionStorage->getPlugin()->setValue('nnPaymentData', $paymentRequestParameters);
-                return $this->response->redirectTo('place-order');
-            }
+       
+        
             // Build request params for Credit card
             if($requestData['paymentKey'] == 'NOVALNET_CC') {
                 $paymentRequestParameters['data']['transaction']['payment_data']['pan_hash'] = $requestData['nnCcPanHash'];
@@ -202,7 +198,7 @@ class PaymentController extends Controller
                 $paymentRequestParameters['data']['instalment']['cycles'] = $requestData['nnInstalmentCycle'];
                 $paymentRequestParameters['data']['customer']['birth_date']   =  $birthday;
             }
-        
+        }
         $this->sessionStorage->getPlugin()->setValue('nnPaymentData', $paymentRequestParameters);
         $this->getLogger(__METHOD__)->error('one', $requestData);
         return $this->response->redirectTo('place-order');
@@ -217,4 +213,5 @@ class PaymentController extends Controller
         $requestData = $this->request->all();
         $this->transaction->removeSavedPaymentDetails('saveOneTimeToken', $requestData);
     }
+    
 }
