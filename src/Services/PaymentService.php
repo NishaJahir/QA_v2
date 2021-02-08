@@ -581,9 +581,9 @@ class PaymentService
 		 $accessKey = trim($this->config->get('Novalnet.novalnet_access_key'));
 		$this->getLogger(__METHOD__)->error('req',$accessKey);
             $headers = array(
-                'Content-Type:application/json',
-                'charset:utf-8',
-                'X-NN-Access-Key:'. base64_encode($accessKey),
+                'Content-Type' => 'application/json',
+                'charset' => 'utf-8',
+                'X-NN-Access-Key' => base64_encode($accessKey)
             );
 		$this->getLogger(__METHOD__)->error('header',$headers);
 		$this->getLogger(__METHOD__)->error('req',$serverRequestData);
