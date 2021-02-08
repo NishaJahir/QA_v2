@@ -6,7 +6,7 @@ use \GuzzleHttp\Psr7\Request;
             'Content-Type' => 'application/json',
             'Charset' => 'utf-8',
             'Accept' => 'application/json',
-            'X-NN-Access-Key' => SdkRestApi::getParam('nn_access_key')
+            'X-NN-Access-Key' => base64_encode("a87ff679a2f3e71d9181a67b7542122c")
         ];
         $client = new \GuzzleHttp\Client($options);
         try {
