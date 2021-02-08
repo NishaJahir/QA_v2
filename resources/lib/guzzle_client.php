@@ -5,7 +5,7 @@ $client = new \GuzzleHttp\Client();
 $response = $client->request(
     'POST', 
     SdkRestApi::getParam('nn_request_process_url'), 
-    SdkRestApi::getParam('nn_header')
+    SdkRestApi::getParam('nn_header'),
     [        
         'json' => SdkRestApi::getParam('nn_request')
     ]
