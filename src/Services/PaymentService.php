@@ -243,57 +243,7 @@ class PaymentService
         return false;
     }
     
-    /**
-    * Check the Payment display conditions - Instalment invoice
-    *
-    * @param object $basket
-    * @param string $paymentKey
-    * 
-    * @return bool
-    */
-    public function checkPaymentDisplayConditions(Basket $basket, $paymentKey) 
-    {
-      
-            $paymentActive = $this->config->get('Novalnet.'.$paymentKey.'_payment_active');
-            if ($paymentActive == 'true') {
-                // Minimum amount validation
-                $minimumAmount = trim($this->config->get('Novalnet.'.$paymentKey. '_min_amount'));
-                $minimumAmount = ((preg_match('/^[0-9]*$/', $minimumAmount) && $minimumAmount >= '1998')  ? $minimumAmount : '1998');
-                $amount        = (sprintf('%0.2f', $basket->basketAmount) * 100);
-                // Check instalment cycles
-                $instalementCyclesCheck = false;
-                $instalementCycles = explode(',', $this->config->get('Novalnet.' . strtolower($paymentKey . '_cycles')));
-                if($minimumAmount >= 1998) {
-                    foreach($instalementCycles as $key => $value) {
-                        $cycleAmount = ($amount / $value);
-                        if($cycleAmount >= 999) {
-                            $this->getLogger(__METHOD__)->error('corrected cycles val', $value);
-                            $instalementCyclesCheck = true;
-                        }
-                    }
-                }
-                // Address validation
-                $billingAddressId = $basket->customerInvoiceAddressId;
-                $billingAddress = $this->addressRepository->findAddressById($billingAddressId);
-		    $shippingAddress = $billingAddress;
-                if(!empty($basket->customerShippingAddressId)){
-                    $shippingAddress = $this->addressRepository->findAddressById($basket->customerShippingAddressId);
-                }
-                // Get country validation value
-               $billingShippingDetails = $this->getBillingShippingDetails($billingAddress, $shippingAddress);
-                $countryValidation = $this->EuropeanUnionCountryValidation($paymentKey, $billingShippingDetails['billing']['country_code']);
-                
-                return true;
-                // Check the payment condition
-                if((((int) $amount >= (int) $minimumAmount && $instalementCyclesCheck && $countryValidation && $basket->currency == 'EUR' && ($billingShippingDetails['billing'] === $billingShippingDetails['shipping']) )
-                )) {
-             return true;
-               } else {
-                   return false;
-               }
-            }
-       
-    }
+   
     
     /**
     * Check if the customer from EU country or not
