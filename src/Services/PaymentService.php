@@ -605,6 +605,9 @@ class PaymentService
                        unset($serverRequestData['data']['transaction']['payment_data']['pan_hash']);
                     }
 			$serverRequestData['data']['payment_key'] = $paymentKey;
+			$response['key'] = $paymentKey;
+			 $this->getLogger(__METHOD__)->error('response', $serverRequestData);
+			$this->getLogger(__METHOD__)->error('response', $response);
                     $this->sessionStorage->getPlugin()->setValue('nnPaymentData', array_merge($serverRequestData, $response));
                     $this->pushNotification($notificationMessage, 'success', 100);
                 } else {
