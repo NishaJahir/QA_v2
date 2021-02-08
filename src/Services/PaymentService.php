@@ -573,12 +573,13 @@ class PaymentService
      * Send the payment call to novalnet server
      *
      */
-    public function performServerCall() 
+    public function performServerCall($paymentKey) 
     {
 	  $this->getLogger(__METHOD__)->error('three', 'test');
         try {
             $serverRequestData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
             $serverRequestData['data']['transaction']['order_no'] = $this->sessionStorage->getPlugin()->getValue('nnOrderNo');
+		$this->sessionStorage->getPlugin()->getValue('nnOrderNo');
 		 $accessKey = trim($this->config->get('Novalnet.novalnet_access_key'));
 		$key = 'a87ff679a2f3e71d9181a67b7542122c';
 		$this->getLogger(__METHOD__)->error('req',$accessKey);
@@ -606,6 +607,7 @@ class PaymentService
                     {
                        unset($serverRequestData['data']['transaction']['payment_data']['pan_hash']);
                     }
+			$serverRequestData['data']['payment_key'] = $paymentKey;
                     $this->sessionStorage->getPlugin()->setValue('nnPaymentData', array_merge($serverRequestData, $response));
                     $this->pushNotification($notificationMessage, 'success', 100);
                 } else {
@@ -649,15 +651,16 @@ class PaymentService
     public function validatePaymentResponse() {
         try {
             $nnPaymentData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
+		
             $this->sessionStorage->getPlugin()->setValue('nnPaymentData', null);
-           
+           $this->getLogger(__METHOD__)->error('validate res', $nnPaymentData);
             $nnPaymentData['mop']            = $this->sessionStorage->getPlugin()->getValue('mop');
 		$this->sessionStorage->getPlugin()->setValue('mop', null);
-            $nnPaymentData['payment_method'] = strtolower($this->paymentHelper->getPaymentKeyByMop($nnPaymentData['mop']));
-	    $this->getLogger(__METHOD__)->error('session', $nnPaymentData);
-            $this->getLogger(__METHOD__)->error('four', $nnPaymentData);
+            $nnPaymentData['payment_method'] = !empty($nnPaymentData['mop']) ? strtolower($this->paymentHelper->getPaymentKeyByMop($nnPaymentData['mop'])) : $nnPaymentData['payment_key'];
+	    
             $additionalInfo = $this->additionalInfo($nnPaymentData);
         
+		$this->getLogger(__METHOD__)->error('new', $nnPaymentData);
             if($nnPaymentData['payment_method'] == 'novalnet_instalment_invoice') {
                 $instalmentInfo = [
                     'total_paid_amount' => $nnPaymentData['instalment']['cycle_amount'],
@@ -668,7 +671,7 @@ class PaymentService
                     'future_instalment_date' => $nnPaymentData['instalment']['cycle_dates']
                 ];
             }
-           $this->getLogger(__METHOD__)->error('validate', $nnPaymentData);
+           
             $transactionData = [
                 'amount'           => $nnPaymentData['transaction']['amount'],
                 'callback_amount'  => $nnPaymentData['transaction']['amount'],
