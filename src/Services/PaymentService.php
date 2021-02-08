@@ -575,6 +575,7 @@ class PaymentService
      */
     public function performServerCall() 
     {
+	  $this->getLogger(__METHOD__)->error('three', 'test');
         try {
             $serverRequestData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
             $serverRequestData['data']['transaction']['order_no'] = $this->sessionStorage->getPlugin()->getValue('nnOrderNo');
@@ -653,11 +654,11 @@ class PaymentService
         try {
             $nnPaymentData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
             $this->sessionStorage->getPlugin()->setValue('nnPaymentData', null);
-
+           
             $nnPaymentData['mop']            = $this->sessionStorage->getPlugin()->getValue('mop');
             $nnPaymentData['payment_method'] = strtolower($this->paymentHelper->getPaymentKeyByMop($nnPaymentData['mop']));
 	    $this->getLogger(__METHOD__)->error('session', $nnPaymentData);
-            
+            $this->getLogger(__METHOD__)->error('four', $nnPaymentData);
             $additionalInfo = $this->additionalInfo($nnPaymentData);
         
             if($nnPaymentData['payment_method'] == 'novalnet_instalment_invoice') {
