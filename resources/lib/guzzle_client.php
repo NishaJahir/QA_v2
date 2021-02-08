@@ -7,7 +7,7 @@ $response = $client->request(
     SdkRestApi::getParam('nn_request_process_url'), 
     [
         'headers' => SdkRestApi::getParam('nn_header'),
-        'query' => ['q' => SdkRestApi::getParam('nn_request')] 
+        'form_params' => SdkRestApi::getParam('nn_request')
     ]
 );
 
