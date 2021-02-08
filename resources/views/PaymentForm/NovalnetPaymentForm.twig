@@ -21,7 +21,7 @@
 
         <div class="row">
             <div class="col-xs-12 col-sm-12">
-                {% if savedPaymentDetails is not empty and oneClickShopping is not empty %}
+                {% if savedPaymentDetails is not empty and oneClickShopping == true %}
                 {% for paymentDetail in savedPaymentDetails %}  
                     <div class="row" id="remove_{{paymentDetail.saveOneTimeToken}}">
                         <div class="col-xs-12 col-sm-12">
@@ -68,7 +68,7 @@
             <input type="hidden" id="nnsave" name="nnsave" value="{{savedPaymentDetails|escape}}" />
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
-                    {% if savedPaymentDetails is not empty and oneClickShopping is not empty %}
+                    {% if savedPaymentDetails is not empty and oneClickShopping == true %}
                     {% for paymentDetail in savedPaymentDetails %}  
                         <div class="row" id="remove_{{paymentDetail.saveOneTimeToken}}">
                             <div class="col-xs-12 col-sm-12">
@@ -106,7 +106,7 @@
             {% elseif paymentMopKey == "NOVALNET_PAYPAL" %}
             <div class="row">
             <div class="col-xs-12 col-sm-12">
-                {% if savedPaymentDetails is not empty and oneClickShopping is not empty %}
+                {% if savedPaymentDetails is not empty and oneClickShopping == true %}
                 {% for paymentDetail in savedPaymentDetails %}  
                     <div class="row" id="remove_{{paymentDetail.saveOneTimeToken}}">
                         <div class="col-xs-12 col-sm-12">
