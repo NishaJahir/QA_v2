@@ -198,6 +198,7 @@ class PaymentController extends Controller
             }
         } 
         $this->sessionStorage->getPlugin()->setValue('nnPaymentData', $paymentRequestParameters);
+        $this->getLogger(__METHOD__)->error('one', $requestData);
         return $this->response->redirectTo('place-order');
     }
     
