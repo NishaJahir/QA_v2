@@ -10,4 +10,4 @@ $response = $client->request(
 );
 
 /** @return array */
-return json_decode($res->getBody(), true); 
+return json_decode($response->getBody(), true); 
