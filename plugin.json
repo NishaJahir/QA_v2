@@ -23,7 +23,7 @@
   "require": ["IO"],
   "serviceProvider": "Novalnet\\Providers\\NovalnetServiceProvider",
   "dependencies" : {
-            "guzzlehttp/guzzle": "6.*" 
+            "guzzlehttp/guzzle": "6.3.*" 
       },
   "runOnBuild": [
     "Novalnet\\Migrations\\CreateAndUpdatePaymentMethodsNewly",
