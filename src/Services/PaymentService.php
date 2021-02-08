@@ -292,9 +292,9 @@ class PaymentService
             ];
          $billingShippingDetails['shipping']    = [
                 'street'   => !empty($shippingAddress->street) ? $shippingAddress->street : $billingAddress->street,
-                'house_no'     => !empty($shippingAddress->houseNumber) ? $shippingAddress->street : $billingAddress->houseNumber,
-                'city'     => !empty($shippingAddress->town) ? $shippingAddress->street : $billingAddress->town,
-                'zip' => !empty($shippingAddress->postalCode) ? $shippingAddress->street : $billingAddress->postalCode,
+                'house_no'     => !empty($shippingAddress->houseNumber) ? $shippingAddress->houseNumber : $billingAddress->houseNumber,
+                'city'     => !empty($shippingAddress->town) ? $shippingAddress->town : $billingAddress->town,
+                'zip' => !empty($shippingAddress->postalCode) ? $shippingAddress->postalCode : $billingAddress->postalCode,
                 'country_code' => !empty($shippingAddress->countryId) ? strtoupper($this->countryRepository->findIsoCode($shippingAddress->countryId, 'iso_code_2')) : strtoupper($this->countryRepository->findIsoCode($billingAddress->countryId, 'iso_code_2'))
             ];
         return $billingShippingDetails;
@@ -575,16 +575,13 @@ class PaymentService
      */
     public function performServerCall($paymentKey) 
     {
-	  $this->getLogger(__METHOD__)->error('three', 'test');
+	  $this->getLogger(__METHOD__)->error('key', $paymentKey);
         try {
             $serverRequestData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
             $serverRequestData['data']['transaction']['order_no'] = $this->sessionStorage->getPlugin()->getValue('nnOrderNo');
-		$this->sessionStorage->getPlugin()->getValue('nnOrderNo');
+	
 		 $accessKey = trim($this->config->get('Novalnet.novalnet_access_key'));
-		$key = 'a87ff679a2f3e71d9181a67b7542122c';
-		$this->getLogger(__METHOD__)->error('req',$accessKey);
-		$this->getLogger(__METHOD__)->error('dfdf',$key);
-		$this->getLogger(__METHOD__)->error('req',$serverRequestData);
+	
             //$response = $this->paymentHelper->executeCurl(json_encode($serverRequestData['data']), $serverRequestData['url']);
 		$response = 
 			 $this->libCall->call( 
