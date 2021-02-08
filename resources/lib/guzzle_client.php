@@ -15,7 +15,7 @@ use \GuzzleHttp\Psr7\Request;
             $response = $e->getResponse();
         }
         return json_decode((string)$response->getBody(), true);
-		}
+		
     
     
     
