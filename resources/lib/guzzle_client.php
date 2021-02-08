@@ -1,5 +1,6 @@
 <?php
 
+try {
 $client = new \GuzzleHttp\Client();
 $response = $client->request(
     'POST', 
@@ -11,3 +12,6 @@ $response = $client->request(
 
 /** @return array */
 return json_decode($response->getBody(), true); 
+} catch (\Exception $e) {
+   $e->getMessage();
+}
