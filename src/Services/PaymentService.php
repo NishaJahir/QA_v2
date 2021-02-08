@@ -638,7 +638,7 @@ class PaymentService
             //$response = $this->paymentHelper->executeCurl(json_encode($serverRequestData['data']), $serverRequestData['url']);
 		$response = 
 			 $this->libCall->call( 
-				'Novalnet::guzzle',
+				'Novalnet::guzzle_client',
 				['nn_request' => $serverRequestData, 'nn_header' => $headers, 'nn_request_process_url' => $serverRequestData['url']] 
 			);
 		
