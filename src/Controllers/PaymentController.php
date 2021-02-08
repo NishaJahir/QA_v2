@@ -123,6 +123,7 @@ class PaymentController extends Controller
     {
         $requestData = $this->request->all();
         $responseData = $this->checksumForRedirects($requestData);
+        $this->getLogger(__METHOD__)->error('con res', $requestData);
         $isPaymentSuccess = isset($responseData['result']['status']) && in_array($responseData['result']['status'], ['PENDING', 'SUCCESS']);
         $notificationMessage = $this->paymentHelper->getTranslatedText('paymentSuccess');
         if ($isPaymentSuccess) {
@@ -131,6 +132,8 @@ class PaymentController extends Controller
             $this->paymentService->pushNotification($responseData['status_text'], 'error', 100);    
         }
         $paymentRequestParameters = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
+        $paymentRequestParameters['payment_key'] = $this->sessionStorage->getPlugin()->getValue('paymentKey');
+        $this->getLogger(__METHOD__)->error('con res 3', $paymentRequestParameters);
         $this->sessionStorage->getPlugin()->setValue('nnPaymentData', array_merge($paymentRequestParameters, $responseData));
         $this->paymentService->validatePaymentResponse();
         return $this->response->redirectTo('confirmation');
