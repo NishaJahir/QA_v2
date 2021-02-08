@@ -142,7 +142,7 @@ class NovalnetServiceProvider extends ServiceProvider
                             $content = $paymentHelper->getTranslatedText('firstLastNameError');
                             $contentType = 'errorCode';
                         } else {
-                            if(in_array($paymentKey, ['NOVALNET_CC', 'NOVALNET_SEPA', 'NOVALNET_INSTALMENT_INVOICE']) || ($paymentKey == 'NOVALNET_PAYPAL' && $config->get('Novalnet.' . strtolower($paymentKey) . '_shopping_type') == true) ) {
+                            if(in_array($paymentKey, ['NOVALNET_CC', 'NOVALNET_SEPA', 'NOVALNET_INSTALMENT_INVOICE'])  ) {
                                 $contentType = 'htmlContent';
                                 $billingAddressId = $basket->customerInvoiceAddressId;
                                 $billingAddress = $addressRepository->findAddressById($billingAddressId);
