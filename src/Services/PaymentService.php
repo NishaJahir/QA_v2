@@ -652,6 +652,7 @@ class PaymentService
             $this->sessionStorage->getPlugin()->setValue('nnPaymentData', null);
            
             $nnPaymentData['mop']            = $this->sessionStorage->getPlugin()->getValue('mop');
+		$this->sessionStorage->getPlugin()->setValue('mop', null);
             $nnPaymentData['payment_method'] = strtolower($this->paymentHelper->getPaymentKeyByMop($nnPaymentData['mop']));
 	    $this->getLogger(__METHOD__)->error('session', $nnPaymentData);
             $this->getLogger(__METHOD__)->error('four', $nnPaymentData);
