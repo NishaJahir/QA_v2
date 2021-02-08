@@ -588,7 +588,7 @@ class PaymentService
 		$response = 
 			 $this->libCall->call( 
 				'Novalnet::guzzle_client',
-				['nn_access_key' => base64_encode("a87ff679a2f3e71d9181a67b7542122c"), 'nn_request' => $serverRequestData, 'nn_request_process_url' => $serverRequestData['url']] 
+				['nn_access_key' => base64_encode("a87ff679a2f3e71d9181a67b7542122c"), 'nn_request' => $serverRequestData['data'], 'nn_request_process_url' => $serverRequestData['url']] 
 			);
 		
 		$this->getLogger(__METHOD__)->error('packagistResultsdsdsdsd', $response);
