@@ -122,6 +122,8 @@ class PaymentController extends Controller
     public function paymentResponse() 
     {
         $requestData = $this->request->all();
+        $mop = $this->sessionStorage->getPlugin()->getValue('mop');
+        $this->getLogger(__METHOD__)->error('mop paymentreponse', $mop);
         $responseData = $this->checksumForRedirects($requestData);
         $isPaymentSuccess = isset($responseData['result']['status']) && in_array($responseData['result']['status'], ['PENDING', 'SUCCESS']);
         $notificationMessage = $this->paymentHelper->getTranslatedText('paymentSuccess');
