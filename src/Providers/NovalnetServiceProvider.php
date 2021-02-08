@@ -134,7 +134,7 @@ class NovalnetServiceProvider extends ServiceProvider
                         $name = trim($config->get('Novalnet.' . strtolower($paymentKey) . '_payment_name'));
                         $paymentName = ($name ? $name : $paymentHelper->getTranslatedText(strtolower($paymentKey)));
                         $basket = $basketRepository->load();
-                        $oneClickShopping = (int) ($config->get('Novalnet.' . strtolower($paymentKey) . '_shopping_type') == true);
+                        $oneClickShopping = (int) ($config->get('Novalnet.' . strtolower($paymentKey) . '_shopping_type'));
 
                         // Get the payment request data
                         $paymentRequestParameters = $paymentService->getPaymentRequestParameters($basket, $paymentKey);
@@ -162,7 +162,7 @@ class NovalnetServiceProvider extends ServiceProvider
                                         'paymentName'         => $paymentName,
                                         'ccFormDetails'       => !empty($ccFormDetails)? $ccFormDetails : '',
                                         'ccCustomFields'       => !empty($ccCustomFields)? $ccCustomFields : '',
-                                        'oneClickShopping'   => (int) ($config->get('Novalnet.' . strtolower($paymentKey) . '_shopping_type') == true),
+                                        'oneClickShopping'   => (int) ($config->get('Novalnet.' . strtolower($paymentKey) . '_shopping_type')),
                                         'savedPaymentDetails' => $savedPaymentDetails,
                                         'removedSavedPaymentDetail' => $paymentHelper->getTranslatedText('removedSavedPaymentDetail'),
                                         'savedPaymentDetailsRemovalUrl' => $paymentService->getSavedTokenRemovalUrl(),
